@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin page</title>
+</head>
+<body>
+Hello admin!
+<hr/>
+<div th:each="person : ${people}">
+    <a th:text="'Id: ' + ${person.getId()} + ' , username: ' + ${person.getUsername()} + ' ,balance: '+ ${person.getBalance()} + ' , role: ' + ${person.getRole()}">person</a>
+</div>
+<br/>
+<form th:action="@{/personalCabinet}" th:method="GET">
+    <input type="submit" value="Get to personal cabinet">
+</form>
+</body>
+</html>
