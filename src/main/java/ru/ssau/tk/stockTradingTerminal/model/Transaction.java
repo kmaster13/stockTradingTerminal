@@ -19,8 +19,12 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person person;
-    @Column(name = "token")
-    private String token;
+    @Column(name = "ticker")
+    private String ticker;
     @Column(name = "amount")
     private int amount;
+    @Column(name = "purchase_price")
+    private int purchasePrice;
+    @Column(name = "current_price")
+    private int currentPrice;
 }

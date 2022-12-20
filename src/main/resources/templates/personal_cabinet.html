@@ -9,6 +9,10 @@ Hello user, it is your personal cabinet.
 <hr/>
 <p th:text="'Your login: ' + ${person.getUsername() + ', your balance: ' + person.getBalance()}"/>
 <br/>
+<hr/>
+<div th:each="transaction : ${transactions}">
+    <a th:text="'Ticker: ' + ${transaction.getTicker()} + ' , amount: '+ ${transaction.getAmount()}">person</a>
+</div>
 <form th:action="@{/logout}" th:method="POST">
     <input type="submit" value="Logout">
 </form>
