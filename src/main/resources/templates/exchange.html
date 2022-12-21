@@ -6,10 +6,12 @@
 </head>
 <body>
 <h1>Available shares to buy:</h1>
+<p th:text="'Your balance - ' + ${person.getBalance()}"/>
 <hr/>
-<div th:each="transaction : ${transactions}">
-    <p th:text="'Ticker: ' + ${transaction.getTicker()} + ' , amount: '+ ${transaction.getAmount()}"/>
-    <p th:text="'Price: ' + ${transaction.getCurrentPrice}"/>
+<div th:each="stock : ${stocks}">
+    <p th:text="'Ticker: ' + ${stock.getTicker()} + ' , name: '+ ${stock.getName()}"/>
+    <p th:text="'Price: ' + ${stock.getPrice()}"/>
+    <form th:></form>
     <br/>
 </div>
 </body>

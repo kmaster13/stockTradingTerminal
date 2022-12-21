@@ -9,25 +9,34 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.ssau.tk.stockTradingTerminal.model.Person;
 import ru.ssau.tk.stockTradingTerminal.security.PersonDetails;
+import ru.ssau.tk.stockTradingTerminal.service.StockService;
 import ru.ssau.tk.stockTradingTerminal.service.TransactionService;
 
 @Controller
 @RequiredArgsConstructor
-public class PersonController {
+public class TradingTerminalController {
     @Autowired
     private final TransactionService transactionService;
-    @GetMapping("/personalCabinet")
-    public String getPersonalCabinetPage(Model model) {
+    @Autowired
+    private final StockService stockService;
+
+    private Person getAuthPerson(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
-        Person person = personDetails.getPerson();
+        return personDetails.getPerson();
+    }
+    @GetMapping("/personalCabinet")
+    public String getPersonalCabinetPage(Model model) {
+        Person person = getAuthPerson();
         model.addAttribute("transactions", transactionService.getAllByPerson(person));
         model.addAttribute("person", person);
         return "personal_cabinet";
     }
     @GetMapping("/exchange")
-    public String getStockExchangePage(){
-
+    public String getStockExchangePage(Model model){
+        Person person = getAuthPerson();
+        model.addAttribute("person", person);
+        model.addAttribute("stocks", stockService.getDefaultStocks());
         return "exchange";
     }
 }

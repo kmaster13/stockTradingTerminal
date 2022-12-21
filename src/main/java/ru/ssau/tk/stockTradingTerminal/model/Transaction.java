@@ -19,12 +19,9 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person person;
-    @Column(name = "ticker")
-    private String ticker;
+    @ManyToOne
+    @JoinColumn(name = "stock_id", referencedColumnName = "id")
+    private Stock stock;
     @Column(name = "amount")
     private int amount;
-    @Column(name = "purchase_price")
-    private int purchasePrice;
-    @Column(name = "current_price")
-    private int currentPrice;
 }
