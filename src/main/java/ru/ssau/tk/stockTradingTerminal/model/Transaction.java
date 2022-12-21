@@ -19,8 +19,15 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person person;
-    @Column(name = "token")
-    private String token;
+    @ManyToOne
+    @JoinColumn(name = "stock_ticker", referencedColumnName = "ticker")
+    private Stock stock;
     @Column(name = "amount")
     private int amount;
+
+    public Transaction(Person person, Stock stock, int amount) {
+        this.person = person;
+        this.stock = stock;
+        this.amount = amount;
+    }
 }

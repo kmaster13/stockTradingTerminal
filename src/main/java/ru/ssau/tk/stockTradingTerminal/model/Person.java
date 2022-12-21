@@ -19,7 +19,7 @@ public class Person {
     @Column(name = "username")
     private String username;
     @Column(name = "balance")
-    private int balance;
+    private double balance;
     @Column(name = "password")
     private String password;
     @Column(name = "role")

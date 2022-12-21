@@ -8,7 +8,11 @@
 Hello user, it is your personal cabinet.
 <hr/>
 <p th:text="'Your login: ' + ${person.getUsername() + ', your balance: ' + person.getBalance()}"/>
-<br/>
+<hr/>
+<div th:each="transaction : ${transactions}">
+    <p th:text="'Ticker: ' + ${transaction.getStock().getTicker()} + ' , amount: '+ ${transaction.getAmount()}"/>
+    <p th:text="'Price: ' + ${transaction.getStock().getPrice()}"/>
+</div>
 <form th:action="@{/logout}" th:method="POST">
     <input type="submit" value="Logout">
 </form>
@@ -17,5 +21,8 @@ Hello user, it is your personal cabinet.
         <input type="submit" value="Get to admin page">
     </form>
 </div>
+<form th:action="@{/exchange}" th:method="GET">
+    <input type="submit" value="Get to exchange">
+</form>
 </body>
 </html>
