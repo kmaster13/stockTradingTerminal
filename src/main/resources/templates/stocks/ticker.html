@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Information about stock</title>
+</head>
+<body>
+<p th:text="'Name stock - ' + ${stock.getName()}"/>
+<p th:text="'Price stock - ' + ${stock.getPrice()}"/>
+<p th:text="'Ticker stock - ' + ${stock.getTicker()}"/>
+<form th:method="POST" th:action="@{/stocks/{ticker}(ticker=${stock.getTicker()})}">
+    <label for="amount">Введи количество акций : </label>
+    <input type="text" name="amount" id="amount"/>
+    <input type="submit" value="Buy"/>
+</form>
+<hr/>
+<form th:action="@{/exchange}" th:method="GET">
+    <input type="submit" value="Get to exchange">
+</form>
+</body>
+</html>

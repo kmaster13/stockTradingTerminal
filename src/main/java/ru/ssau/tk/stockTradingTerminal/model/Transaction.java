@@ -20,8 +20,14 @@ public class Transaction {
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person person;
     @ManyToOne
-    @JoinColumn(name = "stock_id", referencedColumnName = "id")
+    @JoinColumn(name = "stock_ticker", referencedColumnName = "ticker")
     private Stock stock;
     @Column(name = "amount")
     private int amount;
+
+    public Transaction(Person person, Stock stock, int amount) {
+        this.person = person;
+        this.stock = stock;
+        this.amount = amount;
+    }
 }

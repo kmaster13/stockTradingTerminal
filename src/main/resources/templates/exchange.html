@@ -8,10 +8,16 @@
 <h1>Available shares to buy:</h1>
 <p th:text="'Your balance - ' + ${person.getBalance()}"/>
 <hr/>
+<form th:action="@{/personalCabinet}" th:method="GET">
+    <input type="submit" value="Get to personal cabinet">
+</form>
+<hr/>
 <div th:each="stock : ${stocks}">
     <p th:text="'Ticker: ' + ${stock.getTicker()} + ' , name: '+ ${stock.getName()}"/>
     <p th:text="'Price: ' + ${stock.getPrice()}"/>
-    <form th:></form>
+    <form th:action="@{/stocks/{ticker}(ticker=${stock.getTicker()})}" th:method="GET">
+        <input type="submit" value="Buy">
+    </form>
     <br/>
 </div>
 </body>
