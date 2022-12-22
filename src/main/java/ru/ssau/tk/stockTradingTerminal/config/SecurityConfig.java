@@ -10,18 +10,18 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.ssau.tk.stockTradingTerminal.service.PersonDetailsService;
+import ru.ssau.tk.stockTradingTerminal.service.PersonService;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private final PersonDetailsService personDetailsService;
+    private final PersonService personService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(personDetailsService)
+        auth.userDetailsService(personService)
                 .passwordEncoder(getPasswordEncoder());
     }
 

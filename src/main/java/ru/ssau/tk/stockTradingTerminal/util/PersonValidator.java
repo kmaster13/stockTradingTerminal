@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ru.ssau.tk.stockTradingTerminal.model.Person;
-import ru.ssau.tk.stockTradingTerminal.service.PersonDetailsService;
+import ru.ssau.tk.stockTradingTerminal.service.PersonService;
 
 @Component
 @RequiredArgsConstructor
 public class PersonValidator implements Validator {
     @Autowired
-    private final PersonDetailsService personDetailsService;
+    private final PersonService personService;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -25,7 +25,7 @@ public class PersonValidator implements Validator {
         Person person = (Person) target;
 
         try{
-            personDetailsService.loadUserByUsername(person.getUsername());
+            personService.loadUserByUsername(person.getUsername());
         } catch (UsernameNotFoundException ignored){
             return;
         }

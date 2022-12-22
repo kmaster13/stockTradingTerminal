@@ -19,6 +19,8 @@ public class TransactionService {
     private final TransactionsRepository transactionsRepository;
     @Autowired
     private final StockService stockService;
+    @Autowired
+    private final PersonService personService;
 
     @Transactional
     public List<Transaction> getAllTransactions() {
@@ -38,6 +40,8 @@ public class TransactionService {
 
     @Transactional
     public void saveTransaction(Stock stock, Person person, int amount) {
+        person.setBalance(person.getBalance() - stock.getPrice() * amount);
+        personService.savePerson(person);
         transactionsRepository.save(new Transaction(person, stock, amount));
     }
 
