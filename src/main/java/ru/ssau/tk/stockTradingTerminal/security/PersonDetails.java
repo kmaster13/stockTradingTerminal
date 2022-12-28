@@ -2,16 +2,20 @@ package ru.ssau.tk.stockTradingTerminal.security;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.ssau.tk.stockTradingTerminal.model.Person;
+import ru.ssau.tk.stockTradingTerminal.service.PersonService;
 
 import java.util.Collection;
 import java.util.Collections;
 
 @Getter
 @RequiredArgsConstructor
+@Setter
 public class PersonDetails implements UserDetails {
     private final Person person;
 

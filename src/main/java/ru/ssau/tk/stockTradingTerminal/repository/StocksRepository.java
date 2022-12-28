@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import ru.ssau.tk.stockTradingTerminal.model.Stock;
 
 @Repository
-public interface StocksRepository extends JpaRepository<Stock,Integer> {
+public interface StocksRepository extends JpaRepository<Stock, Integer> {
 }

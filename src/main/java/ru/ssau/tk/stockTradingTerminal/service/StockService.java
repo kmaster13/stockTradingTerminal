@@ -1,11 +1,13 @@
 package ru.ssau.tk.stockTradingTerminal.service;
 
-import lombok.RequiredArgsConstructor;
+
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.ssau.tk.stockTradingTerminal.model.Stock;
 import ru.ssau.tk.stockTradingTerminal.repository.StocksRepository;
 import ru.tinkoff.invest.openapi.OpenApi;
+import ru.tinkoff.invest.openapi.model.rest.MarketInstrument;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -14,21 +16,23 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class StockService {
+    private OpenApi api;
+    private StocksRepository stocksRepository;
     @Autowired
-    private final OpenApi api;
-
-    @Autowired
-    private final StocksRepository stocksRepository;
+    public StockService(OpenApi api, StocksRepository stocksRepository) {
+        this.api = api;
+        this.stocksRepository = stocksRepository;
+    }
 
     @Transactional
     public Stock getStockByTicker(String ticker) {
-        var list = api.getMarketContext()
+        List<MarketInstrument> list = api.getMarketContext()
                 .searchMarketInstrumentsByTicker(ticker)
                 .join()
                 .getInstruments();
-        var item = list.get(0);
+        MarketInstrument item = list.get(0);
         double price = api.getMarketContext().getMarketOrderbook(item.getFigi(), 0).join().get().getLastPrice().doubleValue();
         return new Stock(
                 item.getTicker(),
@@ -37,9 +41,7 @@ public class StockService {
         );
     }
 
-    @Transactional
-    public Set<Stock> getDefaultStocks() {
-        Set<Stock> set = new HashSet<>();
+    private List<String> getListStocks() {
         List<String> tickers = new ArrayList<>();
         {
             tickers.add("FIXP");
@@ -64,10 +66,21 @@ public class StockService {
             tickers.add("YNDX");
             tickers.add("SBER");
         }
+        return tickers;
+    }
+
+    public void updateStocks() {
+        List<String> tickers = getListStocks();
+        Set<Stock> set = new HashSet<>();
         for (String ticker : tickers) {
             set.add(getStockByTicker(ticker));
             stocksRepository.save(getStockByTicker(ticker));
         }
-        return set;
+    }
+
+    @Transactional
+    public List<Stock> getDefaultStocks() {
+        updateStocks();
+        return stocksRepository.findAll();
     }
 }

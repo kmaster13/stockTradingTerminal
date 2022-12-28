@@ -8,11 +8,19 @@
 <p th:text="'Name stock - ' + ${stock.getName()}"/>
 <p th:text="'Price stock - ' + ${stock.getPrice()}"/>
 <p th:text="'Ticker stock - ' + ${stock.getTicker()}"/>
-<form th:method="POST" th:action="@{/stocks/{ticker}(ticker=${stock.getTicker()})}">
+<form th:method="PUT" th:action="@{/stocks/{ticker}(ticker=${stock.getTicker()})}">
     <label for="amount">Введи количество акций : </label>
     <input type="text" name="amount" id="amount"/>
     <input type="submit" value="Buy"/>
 </form>
+<br/>
+<div th:each="transaction : ${transactions}">
+    <p th:text="'Ticker: ' + ${transaction.getStock().getTicker()} + ' , amount: '+ ${transaction.getAmount()}"/>
+    <p th:text="'Current price: ' + ${transaction.getStock().getPrice()} + ' ,purchase price: ' + ${transaction.getPrice()}"/>
+    <form th:action="@{/transaction/{id}(id=${transaction.getId()})}" th:method="GET">
+        <input type="submit" value="Sell">
+    </form>
+</div>
 <hr/>
 <form th:action="@{/exchange}" th:method="GET">
     <input type="submit" value="Get to exchange">

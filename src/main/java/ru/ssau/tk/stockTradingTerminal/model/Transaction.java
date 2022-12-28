@@ -25,9 +25,13 @@ public class Transaction {
     @Column(name = "amount")
     private int amount;
 
-    public Transaction(Person person, Stock stock, int amount) {
+    @Column(name = "price")
+    private double price;
+
+    public Transaction(Person person, Stock stock, int amount, double price) {
         this.person = person;
         this.stock = stock;
         this.amount = amount;
+        this.price = price;
     }
 }

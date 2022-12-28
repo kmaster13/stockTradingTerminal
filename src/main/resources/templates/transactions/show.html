@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Your transaction</title>
+</head>
+<body>
+<p th:text="'Ticker: ' + ${transaction.getStock().getTicker()} + ' , amount: '+ ${transaction.getAmount()}"/>
+<p th:text="'Current price: ' + ${transaction.getStock().getPrice()} + ' ,purchase price: ' + ${transaction.getPrice()}"/>
+<form th:action="@{/transaction/{id}(id=${transaction.getId()})}" th:method="POST">
+    <label for="amount">Введи количество акций на продажу : </label>
+    <input type="text" name="amount" id="amount"/>
+    <input type="submit" value="Sell">
+</form>
+</body>
+</html>

@@ -18,14 +18,8 @@ public class TransactionService {
     @Autowired
     private final TransactionsRepository transactionsRepository;
     @Autowired
-    private final StockService stockService;
-    @Autowired
     private final PersonService personService;
 
-    @Transactional
-    public List<Transaction> getAllTransactions() {
-        return transactionsRepository.findAll();
-    }
 
     @Transactional
     public Transaction getTransaction(int id) {
@@ -33,25 +27,36 @@ public class TransactionService {
         return transaction.orElse(null);
     }
 
-    @Transactional
-    public void saveTransaction(Transaction transaction) {
-        transactionsRepository.save(transaction);
-    }
 
     @Transactional
-    public void saveTransaction(Stock stock, Person person, int amount) {
+    public void createTransaction(Stock stock, Person person, int amount) {
         person.setBalance(person.getBalance() - stock.getPrice() * amount);
         personService.savePerson(person);
-        transactionsRepository.save(new Transaction(person, stock, amount));
+        transactionsRepository.save(new Transaction(person, stock, amount, stock.getPrice()));
     }
 
     @Transactional
-    public void deleteTransaction(int id) {
-        transactionsRepository.deleteById(id);
+    public void sellTransaction(int id, int amount, Person person) {
+        Transaction transaction = getTransaction(id);
+        person.setBalance(person.getBalance() + transaction.getStock().getPrice() * amount);
+        personService.savePerson(person);
+        int transactionAmount = transaction.getAmount() - amount;
+        if (transactionAmount == 0) {
+            transactionsRepository.deleteById(id);
+        } else if (transactionAmount > 0) {
+            transactionsRepository.save(new Transaction(id, person, transaction.getStock(),
+                    transactionAmount, transaction.getPrice()));
+        }
     }
+
 
     @Transactional
     public List<Transaction> getAllByPerson(Person person) {
         return transactionsRepository.getAllByPerson(person);
+    }
+
+    @Transactional
+    public List<Transaction> getAllByPersonAndStock(Person person, Stock stock) {
+        return transactionsRepository.getAllByPersonAndStock(person, stock);
     }
 }

@@ -11,7 +11,10 @@ Hello user, it is your personal cabinet.
 <hr/>
 <div th:each="transaction : ${transactions}">
     <p th:text="'Ticker: ' + ${transaction.getStock().getTicker()} + ' , amount: '+ ${transaction.getAmount()}"/>
-    <p th:text="'Price: ' + ${transaction.getStock().getPrice()}"/>
+    <p th:text="'Current price: ' + ${transaction.getStock().getPrice()} + ' ,purchase price: ' + ${transaction.getPrice()}"/>
+    <form th:action="@{/stocks/{ticker}(ticker=${transaction.getStock.getTicker()})}" th:method="GET">
+        <input type="submit" value="Get to stock">
+    </form>
 </div>
 <form th:action="@{/logout}" th:method="POST">
     <input type="submit" value="Logout">
