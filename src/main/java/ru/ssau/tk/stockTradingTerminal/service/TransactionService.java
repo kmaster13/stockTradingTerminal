@@ -49,7 +49,6 @@ public class TransactionService {
         }
     }
 
-
     @Transactional
     public List<Transaction> getAllByPerson(Person person) {
         return transactionsRepository.getAllByPerson(person);

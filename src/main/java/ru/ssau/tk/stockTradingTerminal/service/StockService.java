@@ -71,9 +71,7 @@ public class StockService {
 
     public void updateStocks() {
         List<String> tickers = getListStocks();
-        Set<Stock> set = new HashSet<>();
         for (String ticker : tickers) {
-            set.add(getStockByTicker(ticker));
             stocksRepository.save(getStockByTicker(ticker));
         }
     }

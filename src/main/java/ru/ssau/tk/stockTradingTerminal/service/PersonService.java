@@ -33,7 +33,7 @@ public class PersonService implements UserDetailsService {
     }
 
     @Transactional
-    public List<Person> getAllByPerson() {
+    public List<Person> getAll() {
         return peopleRepository.findAll();
     }
 

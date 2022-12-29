@@ -24,4 +24,11 @@ public class Person {
     private String password;
     @Column(name = "role")
     private String role;
+
+    public Person(String username, double balance, String password, String role) {
+        this.username = username;
+        this.balance = balance;
+        this.password = password;
+        this.role = role;
+    }
 }
